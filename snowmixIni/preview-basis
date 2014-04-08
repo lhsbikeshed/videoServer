@@ -74,6 +74,50 @@ feed idle 5 300 ../frames/dead-1280x960.bgra
 feed scale 5 1 3
 feed socket 5 /tmp/captain-cam-control-pipe-preview
 
+# Define feed #5, set geometry to 1280×960, define as live, set idle time
+# to 100 frames and set idle image, scale to 1/3 and specify control socket.
+# Furthermore the feed is defined as live meaning Snowmix will drop frames if
+# it is late.
+feed add 6 Feed #6
+feed geometry 6 1280 960
+feed live 6
+feed idle 6 300 ../frames/dead-1280x960.bgra
+feed scale 6 1 3
+feed socket 6 /tmp/pilot-screen-control-pipe-preview
+
+# Define feed #5, set geometry to 1280×960, define as live, set idle time
+# to 100 frames and set idle image, scale to 1/3 and specify control socket.
+# Furthermore the feed is defined as live meaning Snowmix will drop frames if
+# it is late.
+feed add 7 Feed #7
+feed geometry 7 1280 960
+feed live 7
+feed idle 7 300 ../frames/dead-1280x960.bgra
+feed scale 7 1 3
+feed socket 7 /tmp/tactical-screen-control-pipe-preview
+
+# Define feed #5, set geometry to 1280×960, define as live, set idle time
+# to 100 frames and set idle image, scale to 1/3 and specify control socket.
+# Furthermore the feed is defined as live meaning Snowmix will drop frames if
+# it is late.
+feed add 8 Feed #8
+feed geometry 8 1280 960
+feed live 8
+feed idle 8 300 ../frames/dead-1280x960.bgra
+feed scale 8 1 3
+feed socket 8 /tmp/engineer-screen-control-pipe-preview
+
+# Define feed #5, set geometry to 1280×960, define as live, set idle time
+# to 100 frames and set idle image, scale to 1/3 and specify control socket.
+# Furthermore the feed is defined as live meaning Snowmix will drop frames if
+# it is late.
+feed add 9 Feed #9
+feed geometry 9 1280 960
+feed live 9
+feed idle 9 300 ../frames/dead-1280x960.bgra
+feed scale 9 1 3
+feed socket 9 /tmp/game-screen-control-pipe-preview
+
 # Set basic cutout
 # Center feed #1 (previously scaled to 1/3) omitting 16 pixels to the left
 # and right and omitting 48 pixels at top and bottom, then place it at 704,0
@@ -104,5 +148,91 @@ feed shift 4 0 640
 # feed cutout 5 16 48 320 192
 feed shift 5 854 640
 
+# Set basic cutout
+# Center feed #5 (previously scaled to 1/3) omitting 16 pixels to the left
+# and right and omitting 48 pixels at top and bottom, then place it at 704,0
+# feed cutout 5 16 48 320 192
+feed shift 6 0 320
+
+# Set basic cutout
+# Center feed #5 (previously scaled to 1/3) omitting 16 pixels to the left
+# and right and omitting 48 pixels at top and bottom, then place it at 704,0
+# feed cutout 5 16 48 320 192
+feed shift 7 427 320
+
+# Set basic cutout
+# Center feed #5 (previously scaled to 1/3) omitting 16 pixels to the left
+# and right and omitting 48 pixels at top and bottom, then place it at 704,0
+# feed cutout 5 16 48 320 192
+feed shift 8 854 320
+
+# Set basic cutout
+# Center feed #5 (previously scaled to 1/3) omitting 16 pixels to the left
+# and right and omitting 48 pixels at top and bottom, then place it at 704,0
+# feed cutout 5 16 48 320 192
+feed shift 9 427 640
+
 # Stack (overlay) feed 0-5 in the order given
-stack  0 1 2 3 4 5
+stack  0 1 2 3 4 5 6 7 8 9
+
+text font 0 Sans Bold 12
+
+text string 0 Pilot Cam
+text string 1 Tactical Cam
+text string 2 Engineer Cam
+text string 3 Cabin Cam
+text string 4 Captain Cam
+text string 5 Pilot Screen
+text string 6 Tactical Screen
+text string 7 Engineer Screen
+text string 8 Game Screen
+
+text place 0 0 0 213 318 1.0 1.0 1.0 1.0 nw
+text place align 0 center bottom
+text place backgr 0 20 20 2 2 0 0 0 1.0
+
+text place 1 1 0 640 318 1.0 1.0 1.0 1.0 nw
+text place align 1 center bottom
+text place backgr 1 20 20 2 2 0 0 0 1.0
+
+text place 2 2 0 1067 318 1.0 1.0 1.0 1.0 nw
+text place align 2 center bottom
+text place backgr 2 20 20 2 2 0 0 0 1.0
+
+text place 3 3 0 213 958 1.0 1.0 1.0 1.0 nw
+text place align 3 center bottom
+text place backgr 3 20 20 2 2 0 0 0 1.0
+
+text place 4 4 0 1067 958 1.0 1.0 1.0 1.0 nw
+text place align 4 center bottom
+text place backgr 4 20 20 2 2 0 0 0 1.0
+
+text place 5 5 0 213 638 1.0 1.0 1.0 1.0 nw
+text place align 5 center bottom
+text place backgr 5 20 20 2 2 0 0 0 1.0
+
+text place 6 6 0 640 638 1.0 1.0 1.0 1.0 nw
+text place align 6 center bottom
+text place backgr 6 20 20 2 2 0 0 0 1.0
+
+text place 7 7 0 1067 638 1.0 1.0 1.0 1.0 nw
+text place align 7 center bottom
+text place backgr 7 20 20 2 2 0 0 0 1.0
+
+text place 8 8 0 640 958 1.0 1.0 1.0 1.0 nw
+text place align 8 center bottom
+text place backgr 8 20 20 2 2 0 0 0 1.0
+
+command create Show
+  overlay text 0..end
+  loop
+command end
+
+#command verbose
+
+# >>>>>>>>>>>>>>>>>> I M P O R T A N T <<<<<<<<<<<<<<<<<<<<<<<
+# This command tells Snowmix to run the command 'Show' for each frame after
+# feeds have been stacked as defined by the 'stack command'
+overlay finish Show
+# >>>>>>>>>>>>>>>>>> I M P O R T A N T <<<<<<<<<<<<<<<<<<<<<<<
+#monitor on
