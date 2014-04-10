@@ -28,7 +28,7 @@ feed geometry 1 1280 960
 feed live 1
 feed idle 1 300 ../frames/dead-1280x960.bgra
 feed scale 1 1 3
-feed socket 1 /tmp/pilot-cam-control-pipe
+feed socket 1 /tmp/pilot-cam-control-pipe-preview
 
 # Define feed #2, set geometry to 1280×960, define as live, set idle time
 # to 100 frames and set idle image, scale to 1/3 and specify control socket.
@@ -39,7 +39,7 @@ feed geometry 2 1280 960
 feed live 2
 feed idle 2 300 ../frames/dead-1280x960.bgra
 feed scale 2 1 3
-feed socket 2 /tmp/tactical-cam-control-pipe
+feed socket 2 /tmp/tactical-cam-control-pipe-preview
 
 # Define feed #3, set geometry to 1280×960, define as live, set idle time
 # to 100 frames and set idle image, scale to 1/3 and specify control socket.
@@ -50,7 +50,7 @@ feed geometry 3 1280 960
 feed live 3
 feed idle 3 300 ../frames/dead-1280x960.bgra
 feed scale 3 1 3
-feed socket 3 /tmp/engineer-cam-control-pipe
+feed socket 3 /tmp/engineer-cam-control-pipe-preview
 
 # Define feed #4, set geometry to 1280×960, define as live, set idle time
 # to 100 frames and set idle image, scale to 1/3 and specify control socket.
@@ -61,7 +61,7 @@ feed geometry 4 1280 960
 feed live 4
 feed idle 4 300 ../frames/dead-1280x960.bgra
 feed scale 4 1 3
-feed socket 4 /tmp/cabin-cam-control-pipe
+feed socket 4 /tmp/cabin-cam-control-pipe-preview
 
 # Define feed #5, set geometry to 1280×960, define as live, set idle time
 # to 100 frames and set idle image, scale to 1/3 and specify control socket.
@@ -72,7 +72,7 @@ feed geometry 5 1280 960
 feed live 5
 feed idle 5 300 ../frames/dead-1280x960.bgra
 feed scale 5 1 3
-feed socket 5 /tmp/captain-cam-control-pipe
+feed socket 5 /tmp/captain-cam-control-pipe-preview
 
 # Define feed #5, set geometry to 1280×960, define as live, set idle time
 # to 100 frames and set idle image, scale to 1/3 and specify control socket.
@@ -83,7 +83,7 @@ feed geometry 6 1280 960
 feed live 6
 feed idle 6 300 ../frames/dead-1280x960.bgra
 feed scale 6 1 3
-feed socket 6 /tmp/pilot-screen-control-pipe
+feed socket 6 /tmp/pilot-screen-control-pipe-preview
 
 # Define feed #5, set geometry to 1280×960, define as live, set idle time
 # to 100 frames and set idle image, scale to 1/3 and specify control socket.
@@ -94,7 +94,7 @@ feed geometry 7 1280 960
 feed live 7
 feed idle 7 300 ../frames/dead-1280x960.bgra
 feed scale 7 1 3
-feed socket 7 /tmp/tactical-screen-control-pipe
+feed socket 7 /tmp/tactical-screen-control-pipe-preview
 
 # Define feed #5, set geometry to 1280×960, define as live, set idle time
 # to 100 frames and set idle image, scale to 1/3 and specify control socket.
@@ -105,7 +105,7 @@ feed geometry 8 1280 960
 feed live 8
 feed idle 8 300 ../frames/dead-1280x960.bgra
 feed scale 8 1 3
-feed socket 8 /tmp/engineer-screen-control-pipe
+feed socket 8 /tmp/engineer-screen-control-pipe-preview
 
 # Define feed #5, set geometry to 1280×960, define as live, set idle time
 # to 100 frames and set idle image, scale to 1/3 and specify control socket.
@@ -116,7 +116,7 @@ feed geometry 9 1280 960
 feed live 9
 feed idle 9 300 ../frames/dead-1280x960.bgra
 feed scale 9 1 3
-feed socket 9 /tmp/game-screen-control-pipe
+feed socket 9 /tmp/game-screen-control-pipe-preview
 
 # Set basic cutout
 # Center feed #1 (previously scaled to 1/3) omitting 16 pixels to the left

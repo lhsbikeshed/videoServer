@@ -21,8 +21,8 @@ while true ; do
     rm -f $CONTROL1
     rm -f $CONTROL2
     
-    # /usr/bin/gst-launch-1.0 -q $SRC ! videorate ! $SCALE ! $VIDEOFORMAT ! tee name=t1 ! $SHMSINK1 t1. ! $SHMSINK2
-    /usr/bin/gst-launch-1.0 -q $SRC ! videorate ! $SCALE ! $VIDEOFORMAT ! $SHMSINK0
+    /usr/bin/gst-launch-1.0 -q $SRC ! videorate ! $SCALE ! $VIDEOFORMAT ! tee name=t1 ! $SHMSINK1 t1. ! $SHMSINK2
+    # /usr/bin/gst-launch-1.0 -q $SRC ! videorate ! $SCALE ! $VIDEOFORMAT ! $SHMSINK0
     
     sleep 2
 done
