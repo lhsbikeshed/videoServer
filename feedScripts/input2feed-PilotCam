@@ -23,7 +23,7 @@ while true ; do
     
     # /usr/local/bin/gst-launch-1.0 -q $SRC ! videorate ! $SCALE ! $VIDEOFORMAT ! tee name=t1 ! $SHMSINK1 t1. ! $SHMSINK2
     # gst-launch-0.10 -q $SRC ! videorate ! $SHMSINK0
-    /usr/bin/gst-launch-0.10 -q $SRC ! videorate ! $SCALE ! $VIDEOFORMAT ! $SHMSINK0
+    /usr/bin/gst-launch-0.10 -q $SRC ! videorate ! $SCALE ! $VIDEOFORMAT ! tee name=t1 ! $SHMSINK1 t1. ! $SHMSINK2
     
     sleep 2
 done
