@@ -3,7 +3,7 @@
 require version 0.4.3
 
 # Listen on port 9999 for command control connections
-system control port 9999
+system control port 9998
 
 # Set system Geometry to 1024x576
 system geometry 1280 960 ARGB
@@ -12,7 +12,7 @@ system geometry 1280 960 ARGB
 system frame rate 25
 
 # Set output control socket
-system socket /tmp/preview-mixer
+system socket /tmp/live-mixer
 
 # Set feed idle time - feed 0 will always be idle. If no file is given,
 # idle image will be all black.
@@ -27,8 +27,7 @@ feed add 1 Feed #1
 feed geometry 1 1280 960
 feed live 1
 feed idle 1 300 ../frames/dead-1280x960.bgra
-feed scale 1 1 3
-feed socket 1 /tmp/pilot-cam-control-pipe-preview
+feed socket 1 /tmp/pilot-cam-control-pipe-live
 
 # Define feed #2, set geometry to 1280×960, define as live, set idle time
 # to 100 frames and set idle image, scale to 1/3 and specify control socket.
@@ -38,8 +37,7 @@ feed add 2 Feed #2
 feed geometry 2 1280 960
 feed live 2
 feed idle 2 300 ../frames/dead-1280x960.bgra
-feed scale 2 1 3
-feed socket 2 /tmp/tactical-cam-control-pipe-preview
+feed socket 2 /tmp/tactical-cam-control-pipe-live
 
 # Define feed #3, set geometry to 1280×960, define as live, set idle time
 # to 100 frames and set idle image, scale to 1/3 and specify control socket.
@@ -49,8 +47,7 @@ feed add 3 Feed #3
 feed geometry 3 1280 960
 feed live 3
 feed idle 3 300 ../frames/dead-1280x960.bgra
-feed scale 3 1 3
-feed socket 3 /tmp/engineer-cam-control-pipe-preview
+feed socket 3 /tmp/engineer-cam-control-pipe-live
 
 # Define feed #4, set geometry to 1280×960, define as live, set idle time
 # to 100 frames and set idle image, scale to 1/3 and specify control socket.
@@ -60,8 +57,7 @@ feed add 4 Feed #4
 feed geometry 4 1280 960
 feed live 4
 feed idle 4 300 ../frames/dead-1280x960.bgra
-feed scale 4 1 3
-feed socket 4 /tmp/cabin-cam-control-pipe-preview
+feed socket 4 /tmp/cabin-cam-control-pipe-live
 
 # Define feed #5, set geometry to 1280×960, define as live, set idle time
 # to 100 frames and set idle image, scale to 1/3 and specify control socket.
@@ -71,10 +67,9 @@ feed add 5 Feed #5
 feed geometry 5 1280 960
 feed live 5
 feed idle 5 300 ../frames/dead-1280x960.bgra
-feed scale 5 1 3
-feed socket 5 /tmp/captain-cam-control-pipe-preview
+feed socket 5 /tmp/captain-cam-control-pipe-live
 
-##########################################################################
+###########################################################
 
 # Set basic cutout
 # Center feed #1 (previously scaled to 1/3) omitting 16 pixels to the left
@@ -86,71 +81,25 @@ feed shift 1 0 0
 # Center feed #2 (previously scaled to 1/3) omitting 16 pixels to the left
 # and right and omitting 48 pixels at top and bottom, then place it at 704,0
 # feed cutout 2 16 48 320 192
-feed shift 2 427 0
+feed shift 2 0 0
 
 # Set basic cutout
 # Center feed #3 (previously scaled to 1/3) omitting 16 pixels to the left
 # and right and omitting 48 pixels at top and bottom, then place it at 704,0
 # feed cutout 3 16 48 320 192
-feed shift 3 854 0
+feed shift 3 0 0
 
 # Set basic cutout
 # Center feed #4 (previously scaled to 1/3) omitting 16 pixels to the left
 # and right and omitting 48 pixels at top and bottom, then place it at 704,0
 # feed cutout 4 16 48 320 192
-feed shift 4 0 640
+feed shift 4 0 0
 
 # Set basic cutout
 # Center feed #5 (previously scaled to 1/3) omitting 16 pixels to the left
 # and right and omitting 48 pixels at top and bottom, then place it at 704,0
 # feed cutout 5 16 48 320 192
-feed shift 5 854 640
+feed shift 5 0 0
 
 # Stack (overlay) feed 0-5 in the order given
 stack  0 1 2 3 4 5
-
-text font 0 Sans Bold 12
-
-text string 0 Pilot Cam
-text string 1 Tactical Cam
-text string 2 Engineer Cam
-text string 3 Cabin Cam
-text string 4 Captain Cam
-
-text place 0 0 0 213 318 1.0 1.0 1.0 1.0 nw
-text place align 0 center bottom
-text place backgr 0 20 20 2 2 0 0 0 1.0
-
-text place 1 1 0 640 318 1.0 1.0 1.0 1.0 nw
-text place align 1 center bottom
-text place backgr 1 20 20 2 2 0 0 0 1.0
-
-text place 2 2 0 1067 318 1.0 1.0 1.0 1.0 nw
-text place align 2 center bottom
-text place backgr 2 20 20 2 2 0 0 0 1.0
-
-text place 3 3 0 213 958 1.0 1.0 1.0 1.0 nw
-text place align 3 center bottom
-text place backgr 3 20 20 2 2 0 0 0 1.0
-
-text place 4 4 0 1067 958 1.0 1.0 1.0 1.0 nw
-text place align 4 center bottom
-text place backgr 4 20 20 2 2 0 0 0 1.0
-
-text place 5 5 0 213 638 1.0 1.0 1.0 1.0 nw
-text place align 5 center bottom
-text place backgr 5 20 20 2 2 0 0 0 1.0
-
-command create Show
-  overlay text 0..end
-  loop
-command end
-
-#command verbose
-
-# >>>>>>>>>>>>>>>>>> I M P O R T A N T <<<<<<<<<<<<<<<<<<<<<<<
-# This command tells Snowmix to run the command 'Show' for each frame after
-# feeds have been stacked as defined by the 'stack command'
-overlay finish Show
-# >>>>>>>>>>>>>>>>>> I M P O R T A N T <<<<<<<<<<<<<<<<<<<<<<<
-#monitor on
