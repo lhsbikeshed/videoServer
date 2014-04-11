@@ -1,11 +1,11 @@
 #!/bin/bash
 
-SRC="rtspsrc location=rtsp://admin:123456@10.0.0.54:554/mpeg4 ! decodebin name=decoder "
+SRC="rtspsrc location=rtsp://admin:123456@10.0.0.54:554/mpeg4 ! decodebin2 name=decoder "
 SHMSIZE='shm-size=54067200'
 SHMOPTION="wait-for-connection=0"
-SCALE="videoscale ! videoconvert"
-VIDEOFORMAT='video/x-raw, format=(string)BGRA, pixel-aspect-ratio=(fraction)1/1, interlace-mode=(string)progressive, width=(int)1280, height=(int)960, framerate=(fraction)25/1'
-CONTROL0=/tmp/cabin-cam-control-pipe
+SCALE="videoscale ! ffmpegcolorspace"
+VIDEOFORMAT='video/x-raw-rgb, bpp=(int)32, depth=(int)32, endianness=(int)4321, red_mask=(int)65280, green_mask=(int)16711680, blue_mask=(int)-16777216, pixel-aspect-ratio=(fraction)1/1, interlaced=(boolean)false, width=(int)1280, height=(int)960, framerate=(fraction)25/1'
+CONTROL0=/tmp/cabin-cam-control-pipe-preview
 CONTROL1=/tmp/cabin-cam-control-pipe-live
 CONTROL2=/tmp/cabin-cam-control-pipe-preview
 SHMSINK0="shmsink socket-path=$CONTROL0 $SHMSIZE $SHMOPTION"
@@ -21,8 +21,9 @@ while true ; do
     rm -f $CONTROL1
     rm -f $CONTROL2
     
-    /usr/bin/gst-launch-1.0 -q $SRC ! videorate ! $SCALE ! $VIDEOFORMAT ! tee name=t1 ! $SHMSINK1 t1. ! $SHMSINK2
+    # /usr/bin/gst-launch-1.0 -q $SRC ! videorate ! $SCALE ! $VIDEOFORMAT ! tee name=t1 ! $SHMSINK1 t1. ! $SHMSINK2
     # /usr/bin/gst-launch-1.0 -q $SRC ! videorate ! $SCALE ! $VIDEOFORMAT ! $SHMSINK0
+    /usr/bin/gst-launch-0.10 -q $SRC ! videorate ! $SCALE ! $VIDEOFORMAT ! $SHMSINK0
     
     sleep 2
 done
