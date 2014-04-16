@@ -26,7 +26,7 @@ feed idle 0 1
 feed add 1 Feed #1
 feed geometry 1 1280 720
 feed live 1
-feed idle 1 300 ../frames/dead-1280x720.bgra
+feed idle 1 300 /home/videoserver/Snowmix-0.4.3/frames/dead-1280x720.bgra
 feed socket 1 /tmp/pilot-cam-control-pipe-live
 
 # Define feed #2, set geometry to 1280×720, define as live, set idle time
@@ -36,7 +36,7 @@ feed socket 1 /tmp/pilot-cam-control-pipe-live
 feed add 2 Feed #2
 feed geometry 2 1280 720
 feed live 2
-feed idle 2 300 ../frames/dead-1280x720.bgra
+feed idle 2 300 /home/videoserver/Snowmix-0.4.3/frames/dead-1280x720.bgra
 feed socket 2 /tmp/tactical-cam-control-pipe-live
 
 # Define feed #3, set geometry to 1280×720, define as live, set idle time
@@ -46,7 +46,7 @@ feed socket 2 /tmp/tactical-cam-control-pipe-live
 feed add 3 Feed #3
 feed geometry 3 1280 720
 feed live 3
-feed idle 3 300 ../frames/dead-1280x720.bgra
+feed idle 3 300 /home/videoserver/Snowmix-0.4.3/frames/dead-1280x720.bgra
 feed socket 3 /tmp/engineer-cam-control-pipe-live
 
 # Define feed #4, set geometry to 1280×720, define as live, set idle time
@@ -56,7 +56,7 @@ feed socket 3 /tmp/engineer-cam-control-pipe-live
 feed add 4 Feed #4
 feed geometry 4 1280 720
 feed live 4
-feed idle 4 300 ../frames/dead-1280x720.bgra
+feed idle 4 300 /home/videoserver/Snowmix-0.4.3/frames/dead-1280x720.bgra
 feed socket 4 /tmp/cabin-cam-control-pipe-live
 
 # Define feed #5, set geometry to 1280×720, define as live, set idle time
@@ -66,7 +66,7 @@ feed socket 4 /tmp/cabin-cam-control-pipe-live
 feed add 5 Feed #5
 feed geometry 5 1280 720
 feed live 5
-feed idle 5 300 ../frames/dead-1280x720.bgra
+feed idle 5 300 /home/videoserver/Snowmix-0.4.3/frames/dead-1280x720.bgra
 feed socket 5 /tmp/captain-cam-control-pipe-live
 
 ###########################################################
@@ -103,3 +103,17 @@ feed shift 5 0 0
 
 # Stack (overlay) feed 0-5 in the order given
 stack  0 5
+
+image load 0 
+image place 0 0 0 0
+
+command create Show
+  overlay image 0
+  loop
+command end
+
+# >>>>>>>>>>>>>>>>>> I M P O R T A N T <<<<<<<<<<<<<<<<<<<<<<<
+# This command tells Snowmix to run the command 'Show' for each frame after
+# feeds have been stacked as defined by the 'stack command'
+overlay finish Show
+# >>>>>>>>>>>>>>>>>> I M P O R T A N T <<<<<<<<<<<<<<<<<<<<<<<
