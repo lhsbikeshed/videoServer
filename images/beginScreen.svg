@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="beginScreenGrid.svg"
+   sodipodi:docname="beginScreen.svg"
    inkscape:export-filename="/home/solexious/videoServer/images/beginScreen.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
@@ -40,7 +40,8 @@
      inkscape:window-maximized="1"
      inkscape:snap-global="true"
      inkscape:snap-grids="true"
-     showguides="false">
+     showguides="true"
+     inkscape:guide-bbox="true">
     <inkscape:grid
        type="xygrid"
        id="grid2997" />
@@ -53,7 +54,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -64,7 +65,7 @@
      transform="translate(0,-332.36218)">
     <g
        id="g4414"
-       transform="matrix(1.0692748,0,0,1.0692748,-28.296737,-58.655996)">
+       transform="matrix(1.0861905,0,0,1.0901968,-38.869063,-73.350832)">
       <text
          sodipodi:linespacing="125%"
          id="text3813"
