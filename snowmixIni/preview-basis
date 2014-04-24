@@ -111,11 +111,11 @@ stack  0 1 2 5 3 4
 
 text font 0 Sans Bold 12
 
-text string 0 Pilot Cam
-text string 1 Tactical Cam
-text string 2 Engineer Cam
-text string 3 Cabin Cam
-text string 4 Captain Cam
+text string 0 Pilot
+text string 1 Tactical
+text string 2 Engineer
+text string 3 Cabin
+text string 4 Captain
 
 text place 0 0 0 256 286 1.0 1.0 1.0 1.0 nw
 text place align 0 center bottom
@@ -129,7 +129,7 @@ text place 2 2 0 256 574 1.0 1.0 1.0 1.0 nw
 text place align 2 center bottom
 text place backgr 2 20 20 2 2 0 0 0 1.0
 
-text place 3 3 0 512 526 1.0 1.0 1.0 1.0 nw
+text place 3 3 0 512 426 1.0 1.0 1.0 1.0 nw
 text place align 3 center bottom
 text place backgr 3 20 20 2 2 0 0 0 1.0
 
