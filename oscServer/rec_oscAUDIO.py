@@ -86,6 +86,7 @@ snowmixLive = 0
 outputPreview = 0
 outputLive = 0
 systemState = 0
+audioFeed = 0
 
 # define a message-handler function for the server to call.
 def system_handler(addr, tags, stuff, source):
@@ -99,6 +100,7 @@ def system_handler(addr, tags, stuff, source):
     global outputPreview
     global outputLive
     global systemState
+    global audioFeed
     print "---"
     #   print "received new osc msg from %s" % OSC.getUrlStr(source)
     print "with addr : %s" % addr
@@ -113,16 +115,17 @@ def system_handler(addr, tags, stuff, source):
             cabinFeed = subprocess.Popen('/home/videoserver/videoServer/feedScripts/input2feed-CabinCam', preexec_fn=os.setsid)
             captainFeed = subprocess.Popen('/home/videoserver/videoServer/feedScripts/input2feed-CaptainCam', preexec_fn=os.setsid)
             snowmixPreview = subprocess.Popen(['/home/videoserver/Snowmix-0.4.3/src/snowmix','/home/videoserver/videoServer/snowmixIni/preview-basis'], preexec_fn=os.setsid)
-            snowmixLive = subprocess.Popen(['/home/videoserver/Snowmix-0.4.3/src/snowmix','/home/videoserver/videoServer/snowmixIni/live-basis'], preexec_fn=os.setsid)
+            snowmixLive = subprocess.Popen(['/home/videoserver/Snowmix-0.4.3/src/snowmix','/home/videoserver/videoServer/snowmixIni/live-basisAUDIO'], preexec_fn=os.setsid)
             time.sleep(2)
+            audioFeed = subprocess.Popen('/home/videoServer/feedScripts/audio2Live', preexec_fn=os.setsid)
             outputPreview = subprocess.Popen('/home/videoserver/videoServer/outputScripts/output2screenPreview', preexec_fn=os.setsid)
-            #outputLive = subprocess.Popen('/home/videoserver/videoServer/outputScripts/output2screenLive', preexec_fn=os.setsid)
+            outputLive = subprocess.Popen('/home/videoserver/videoServer/outputScripts/av_output2tcp_server2', preexec_fn=os.setsid)
             
             systemState = 1
             
         elif a == 0 and systemState == 1:
             os.killpg(outputPreview.pid, signal.SIGTERM)
-            #os.killpg(outputLive.pid, signal.SIGTERM)
+            os.killpg(outputLive.pid, signal.SIGTERM)
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect((TCP_IP, TCP_PORT))
             s.send("quit\n")
@@ -134,6 +137,7 @@ def system_handler(addr, tags, stuff, source):
             time.sleep(2)
             os.killpg(snowmixPreview.pid, signal.SIGTERM)
             os.killpg(snowmixLive.pid, signal.SIGTERM)
+            os.killpg(audioFeed.pid, signal.SIGTERM)
             os.killpg(pilotFeed.pid, signal.SIGTERM)
             os.killpg(tacticalFeed.pid, signal.SIGTERM)
             os.killpg(engineerFeed.pid, signal.SIGTERM)
@@ -217,6 +221,7 @@ except KeyboardInterrupt :
     time.sleep(2)
     os.killpg(snowmixPreview.pid, signal.SIGTERM)
     os.killpg(snowmixLive.pid, signal.SIGTERM)
+    os.killpg(audioFeed.pid, signal.SIGTERM)
     os.killpg(pilotFeed.pid, signal.SIGTERM)
     os.killpg(tacticalFeed.pid, signal.SIGTERM)
     os.killpg(engineerFeed.pid, signal.SIGTERM)
