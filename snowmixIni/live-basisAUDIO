@@ -119,12 +119,12 @@ audio sink channels 1 2
 audio sink rate 1 48000
 audio sink format 1 16 signed
 audio sink source mixer 1 1
-audio sink file 1 /tmp/audio
 
+audio feed mute off 1
+audio mixer mute off 1
 audio sink mute off 1
 
 audio mixer start 1
-audio sink start 1
 
 image load 0 
 image place 0 0 0 0
