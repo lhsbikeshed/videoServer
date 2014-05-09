@@ -55,8 +55,9 @@ while true ; do
   #snowmix=`ps c |cut -c28-34 | grep snowmix | head -1`
   #if [ X$snowmix != X ] ;then
     if [ X$rate != X -a X$channels != X ] ; then
+      echo USING AUDIO
       (echo audio sink ctr isaudio 1 ; sleep 10000000 ) | \
-        nc 127.0.0.1 9999 | \
+        nc 127.0.0.1 9998 | \
       ( head -1
 	$gstlaunch -v		\
 	  $AUDIO_SRC		!\
@@ -78,7 +79,7 @@ while true ; do
 	  queue			!\
 	  matroskamux name=muxer streamable=true !\
 	  queue			!\
-	  tcpserversink host=0.0.0.0 port=$SERVER_PORT sync-method=2 recover-policy=keyframe
+	  tcpserversink host=10.0.0.50 port=$SERVER_PORT sync-method=2 recover-policy=keyframe
       )
     else
 	$gstlaunch -v		\
@@ -92,7 +93,7 @@ while true ; do
 	  queue			!\
 	  matroskamux name=muxer streamable=true !\
 	  queue			!\
-	  tcpserversink host=0.0.0.0 port=$SERVER_PORT sync-method=2 recover-policy=keyframe
+	  tcpserversink host=10.0.0.50 port=$SERVER_PORT sync-method=2 recover-policy=keyframe
     fi
   #else
   #  echo Snowmix is not running. Quitting $0

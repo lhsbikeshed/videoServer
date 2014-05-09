@@ -117,15 +117,20 @@ def system_handler(addr, tags, stuff, source):
             snowmixPreview = subprocess.Popen(['/home/videoserver/Snowmix-0.4.3/src/snowmix','/home/videoserver/videoServer/snowmixIni/preview-basis'], preexec_fn=os.setsid)
             snowmixLive = subprocess.Popen(['/home/videoserver/Snowmix-0.4.3/src/snowmix','/home/videoserver/videoServer/snowmixIni/live-basisAUDIO'], preexec_fn=os.setsid)
             time.sleep(2)
-            audioFeed = subprocess.Popen('/home/videoServer/feedScripts/audio2Live', preexec_fn=os.setsid)
+            audioFeed = subprocess.Popen('/home/videoserver/videoServer/feedScripts/audio2Live', preexec_fn=os.setsid)
+            time.sleep(2)
+            os.killpg(audioFeed.pid, signal.SIGTERM)
+            audioFeed = subprocess.Popen('/home/videoserver/videoServer/feedScripts/audio2Live', preexec_fn=os.setsid)
+            time.sleep(2)
             outputPreview = subprocess.Popen('/home/videoserver/videoServer/outputScripts/output2screenPreview', preexec_fn=os.setsid)
-            outputLive = subprocess.Popen('/home/videoserver/videoServer/outputScripts/av_output2tcp_server2', preexec_fn=os.setsid)
+            #outputLive = subprocess.Popen('/home/videoserver/videoServer/outputScripts/av_output2tcp_server2', preexec_fn=os.setsid)
+            #outputLive = subprocess.Popen('/home/videoserver/videoServer/outputScripts/output2screenLiveFull', preexec_fn=os.setsid)
             
             systemState = 1
             
         elif a == 0 and systemState == 1:
             os.killpg(outputPreview.pid, signal.SIGTERM)
-            os.killpg(outputLive.pid, signal.SIGTERM)
+            #os.killpg(outputLive.pid, signal.SIGTERM)
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect((TCP_IP, TCP_PORT))
             s.send("quit\n")
