@@ -104,6 +104,30 @@ feed shift 5 0 0
 # Stack (overlay) feed 0-5 in the order given
 stack  0 5
 
+audio feed add 1 Line-In
+audio feed channels 1 2
+audio feed rate 1 48000
+audio feed format 1 16 signed
+audio feed delay 1 2050
+
+audio mixer add 1 Main Mixer
+audio mixer channels 1 2
+audio mixer rate 1 48000
+audio mixer source feed 1 1
+
+audio sink add 1 Output
+audio sink channels 1 2
+audio sink rate 1 48000
+audio sink format 1 16 signed
+audio sink source mixer 1 1
+
+audio feed mute off 1
+audio mixer source mute off 1 1
+audio mixer mute off 1
+audio sink mute off 1
+
+audio mixer start 1
+
 image load 0 
 image place 0 0 0 0
 
