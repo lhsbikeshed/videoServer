@@ -1,4 +1,4 @@
 #!/bin/bash
 AUDIOFORMAT='audio/x-raw-int, endianness=(int)1234, signed=(boolean)true, width=(int)16, depth=(int)16, rate=(int)48000, channels=(int)2'
 
-    (echo 'audio feed ctr isaudio 1\n' ; gst-launch -q pulsesrc ! $AUDIOFORMAT ! fdsink fd=1 sync=true) | nc 127.0.0.1 9998
+    (echo 'audio feed ctr isaudio 1\n' ; gst-launch -q pulsesrc ! $AUDIOFORMAT ! audioconvert  ! fdsink fd=1 sync=true) | nc 127.0.0.1 9998
