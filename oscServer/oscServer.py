@@ -68,12 +68,16 @@ def screenFocus_handler(addr, tags, stuff, source):
         s.connect((TCP_IP, TCP_PORT))
         if a == 0:
             s.send("image load 0 \n")
+            s.send("audio mixer source mute off 1 1 \n")
         if a == 1:
             s.send("image load 0 /home/videoserver/videoServer/images/beginScreen.png \n")
+            s.send("audio mixer source mute on 1 1 \n")
         if a == 2:
             s.send("image load 0 /home/videoserver/videoServer/images/technicalDifficulties.png \n")
+            s.send("audio mixer source mute on 1 1 \n")
         if a == 3:
             s.send("image load 0 /home/videoserver/videoServer/images/endScreen.png \n")
+            s.send("audio mixer source mute on 1 1 \n")
         s.close()
 
 pilotFeed = 0
