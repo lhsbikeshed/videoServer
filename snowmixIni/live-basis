@@ -108,7 +108,7 @@ audio feed add 1 Line-In
 audio feed channels 1 2
 audio feed rate 1 48000
 audio feed format 1 16 signed
-audio feed delay 1 2050
+audio feed delay 1 150
 
 #audio feed add 2 TechDiff
 #audio feed channels 2 2

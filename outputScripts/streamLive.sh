@@ -46,7 +46,7 @@
     ########################################################
 
     # This will detect gstreamer-1.0 over gstreamer-0.10
-    gstlaunch=`which gst-launch-1.0dfgdfg`
+    gstlaunch=`which gst-launch-1.0bcvbvb`
     if [ X$gstlaunch != X ] ; then
       VIDEOCONVERT=videoconvert
       VIDEO='video/x-raw, format=(string)BGRA, pixel-aspect-ratio=(fraction)1/1, interlace-mode=(string)progressive'
@@ -116,41 +116,24 @@
     audiosink=1
     MIXERFORMAT=$VIDEO', bpp=(int)32, depth=(int)32, endianness=(int)4321, format=('$vfid')BGRA, red_mask=(int)65280, green_mask=(int)16711680, blue_mask=(int)-16777216, width=(int)'$width', height=(int)'$height', framerate=(fraction)'$framerate', pixel-aspect-ratio=(fraction)1/1, interlaced=(boolean)false'
     VIDEOSRC='shmsrc socket-path='$ctrsocket' do-timestamp=true is-live=true'
-    AUDIOSRC="fdsrc fd=0"
-    echo $gstlaunch -v $GST_DEBUG                         \
-            $VIDEOSRC                               !\
-            $VIDEOFORMAT                            !\
-            queue                                   !\
-            $VIDEOCONVERT                           !\
-            $videoencoder                           !\
-            $ENCVIDEOFORMAT                         !\
-            queue                                   !\
-            mux. $AUDIOSRC                          !\
-            $AUDIOFORMAT                            !\
-            queue                                   !\
-            $audioencoder                           !\
-            $ENCAUDIOFORMAT                         !\
-            queue                                   !\
-            flvmux streamable=true name=mux         !\
-            queue                                   !\
-            rtmpsink location="$location"
-
+    AUDIOSRC="fdsrc fd=0 do-timestamp=true"
     (echo audio sink ctr isaudio 1 ; sleep 10000000 ) | \
         nc 127.0.0.1 9998 | \
     (head -1
      $gstlaunch -v $GST_DEBUG                         \
-            $VIDEOSRC                               !\
+            $AUDIOSRC                          !\
+            $AUDIOFORMAT                            !\
+            queue                                   !\
+            audiorate                               !\
+            $audioencoder                           !\
+            $ENCAUDIOFORMAT                         !\
+            queue                                   !\
+            mux. $VIDEOSRC                               !\
             $VIDEOFORMAT                            !\
             queue                                   !\
             $VIDEOCONVERT                           !\
             $videoencoder                           !\
             $ENCVIDEOFORMAT                         !\
-            queue                                   !\
-            mux. $AUDIOSRC                          !\
-            $AUDIOFORMAT                            !\
-            queue                                   !\
-            $audioencoder                           !\
-            $ENCAUDIOFORMAT                         !\
             queue                                   !\
             flvmux streamable=true name=mux         !\
             queue                                   !\
