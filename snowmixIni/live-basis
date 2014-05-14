@@ -108,12 +108,7 @@ audio feed add 1 Line-In
 audio feed channels 1 2
 audio feed rate 1 48000
 audio feed format 1 16 signed
-audio feed delay 1 150
-
-#audio feed add 2 TechDiff
-#audio feed channels 2 2
-#audio feed rate 2 44100
-#audio feed format 2 16 signed
+audio feed delay 1 50
 
 audio mixer add 1 Main Mixer
 audio mixer channels 1 2
@@ -126,7 +121,6 @@ audio sink rate 1 48000
 audio sink format 1 16 signed
 #audio sink source mixer 1 0
 audio sink source mixer 1 1
-#audio sink source mixer 1 2
 
 audio feed mute off 1
 audio mixer source mute off 1 1

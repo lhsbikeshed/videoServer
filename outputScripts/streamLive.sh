@@ -27,7 +27,7 @@
     ###################### Settings ########################
     width=1280
     height=720
-    audiorate=44100
+    audiorate=48000
     channels=2
     framerate='25/1'
     vbitrate=4000
