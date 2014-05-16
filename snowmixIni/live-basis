@@ -106,18 +106,18 @@ stack  0 4
 
 audio feed add 1 Line-In
 audio feed channels 1 2
-audio feed rate 1 48000
+audio feed rate 1 44100
 audio feed format 1 16 signed
 audio feed delay 1 50
 
 audio mixer add 1 Main Mixer
 audio mixer channels 1 2
-audio mixer rate 1 48000
+audio mixer rate 1 44100
 audio mixer source feed 1 1
 
 audio sink add 1 Output
 audio sink channels 1 2
-audio sink rate 1 48000
+audio sink rate 1 44100
 audio sink format 1 16 signed
 #audio sink source mixer 1 0
 audio sink source mixer 1 1

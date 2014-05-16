@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SRC="rtspsrc location=rtsp://admin:123456@10.0.0.51:554/mpeg4 ! decodebin2 name=decoder "
+SRC="rtspsrc location=rtsp://admin:123456@10.0.0.51:554/mpeg4 latency=0 drop-on-latency=true ! decodebin2 name=decoder "
 SHMSIZE='shm-size=64067200'
 SHMOPTION="wait-for-connection=0"
 SCALE="ffmpegcolorspace"
@@ -22,8 +22,8 @@ while true ; do
     rm -f $CONTROL2
     
     # /usr/local/bin/gst-launch-1.0 -q $SRC ! videorate ! $SCALE ! $VIDEOFORMAT ! tee name=t1 ! $SHMSINK1 t1. ! $SHMSINK2
-    # gst-launch-0.10 -q $SRC ! videorate ! $SHMSINK0
-    echo /usr/bin/gst-launch-0.10 -q $SRC ! $SCALE ! $VIDEOFORMAT ! tee name=t1 ! $SHMSINK1 t1. ! $SHMSINK2
+    #/usr/bin/gst-launch-0.10 -q $SRC ! videorate ! $SCALE ! $VIDEOFORMAT ! $SHMSINK0
+    #echo /usr/bin/gst-launch-0.10 -q $SRC ! $SCALE ! $VIDEOFORMAT ! tee name=t1 ! $SHMSINK1 t1. ! $SHMSINK2
     /usr/bin/gst-launch-0.10 -q $SRC ! $SCALE ! $VIDEOFORMAT ! tee name=t1 ! $SHMSINK1 t1. ! $SHMSINK2
     
     sleep 2

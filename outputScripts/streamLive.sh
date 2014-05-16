@@ -27,7 +27,7 @@
     ###################### Settings ########################
     width=1280
     height=720
-    audiorate=48000
+    audiorate=44100
     channels=2
     framerate='25/1'
     vbitrate=4000
@@ -116,7 +116,7 @@
     audiosink=1
     MIXERFORMAT=$VIDEO', bpp=(int)32, depth=(int)32, endianness=(int)4321, format=('$vfid')BGRA, red_mask=(int)65280, green_mask=(int)16711680, blue_mask=(int)-16777216, width=(int)'$width', height=(int)'$height', framerate=(fraction)'$framerate', pixel-aspect-ratio=(fraction)1/1, interlaced=(boolean)false'
     VIDEOSRC='shmsrc socket-path='$ctrsocket' do-timestamp=true is-live=true'
-    AUDIOSRC="fdsrc fd=0 do-timestamp=true"
+    AUDIOSRC="fdsrc fd=0"
     (echo audio sink ctr isaudio 1 ; sleep 10000000 ) | \
         nc 127.0.0.1 9998 | \
     (head -1
@@ -124,7 +124,6 @@
             $AUDIOSRC                          !\
             $AUDIOFORMAT                            !\
             queue                                   !\
-            audiorate                               !\
             $audioencoder                           !\
             $ENCAUDIOFORMAT                         !\
             queue                                   !\
