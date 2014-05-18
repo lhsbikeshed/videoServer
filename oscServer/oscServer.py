@@ -21,6 +21,7 @@ import time
 
 TCP_IP = '127.0.0.1'
 TCP_PORT = 9998
+TCP_PORT2 = 9999
 
 
 # tupple with ip, port. i dont use the () but maybe you want -> send_address = ('127.0.0.1', 9000)
@@ -50,10 +51,46 @@ def feedFocus_handler(addr, tags, stuff, source):
     print "data %s" % stuff
     print "---"
     for a in stuff:
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect((TCP_IP, TCP_PORT))
-        s.send("stack 0 %s \n" % a)
-        s.close()
+        setCamera(a)
+
+def setCamera(feedNum):
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((TCP_IP, TCP_PORT))
+    s2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s2.connect((TCP_IP, TCP_PORT2))
+        if feedNum == 1:
+            s2.send("text place rgb 1 0.0 1.0 0.0 \n text place rgb 2 1.0 0.0 0.0 \n text place rgb 3 1.0 0.0 0.0 \n text place rgb 4 1.0 0.0 0.0 \n text place rgb 5 1.0 0.0 0.0 \n")
+            s.send("stack 0 %s \n" % feedNum)
+            s.send("image load 1 /home/videoserver/videoServer/images/screenOverlayMirror.png \n")
+            s.send("text string 0 \n")
+            s.send("text string 1 Pilot: \n")
+        else if feedNum == 2:
+            s2.send("text place rgb 1 1.0 0.0 0.0 \n text place rgb 2 0.0 1.0 0.0 \n text place rgb 3 1.0 0.0 0.0 \n text place rgb 4 1.0 0.0 0.0 \n text place rgb 5 1.0 0.0 0.0 \n")
+            s.send("stack 0 %s \n" % feedNum)
+            s.send("image load 1 /home/videoserver/videoServer/images/screenOverlay.png \n")
+            s.send("text string 0 Tactical: \n")
+            s.send("text string 1 \n")
+        else if feedNum == 3:
+            s2.send("text place rgb 1 1.0 0.0 0.0 \n text place rgb 2 1.0 0.0 0.0 \n text place rgb 3 0.0 1.0 0.0 \n text place rgb 4 1.0 0.0 0.0 \n text place rgb 5 1.0 0.0 0.0 \n")
+            s.send("stack 0 %s \n" % feedNum)
+            s.send("image load 1 /home/videoserver/videoServer/images/screenOverlayMirror.png \n")
+            s.send("text string 0 \n")
+            s.send("text string 1 Engineer: \n")
+        else if feedNum == 4:
+            s2.send("text place rgb 1 1.0 0.0 0.0 \n text place rgb 2 1.0 0.0 0.0 \n text place rgb 3 1.0 0.0 0.0 \n text place rgb 4 0.0 1.0 0.0 \n text place rgb 5 1.0 0.0 0.0 \n")
+            s.send("stack 0 %s \n" % feedNum)
+            s.send("image load 1 /home/videoserver/videoServer/images/screenOverlayMirror.png \n")
+            s.send("text string 0 \n")
+            s.send("text string 1 Cabin: \n")
+        else if feedNum == 5:
+            s2.send("text place rgb 1 1.0 0.0 0.0 \n text place rgb 2 1.0 0.0 0.0 \n text place rgb 3 1.0 0.0 0.0 \n text place rgb 4 1.0 0.0 0.0 \n text place rgb 5 0.0 1.0 0.0 \n")
+            s.send("stack 0 %s \n" % feedNum)
+            s.send("image load 1 /home/videoserver/videoServer/images/screenOverlay.png \n")
+            s.send("text string 0 Captain: \n")
+            s.send("text string 1 \n")
+    s.close()
+    s2.close()
+
 
 # define a message-handler function for the server to call.
 def screenFocus_handler(addr, tags, stuff, source):
@@ -69,13 +106,13 @@ def screenFocus_handler(addr, tags, stuff, source):
         if a == 0:
             s.send("image load 0 \n")
             s.send("audio mixer source mute off 1 1 \n")
-        if a == 1:
+        else if a == 1:
             s.send("image load 0 /home/videoserver/videoServer/images/beginScreen.png \n")
             s.send("audio mixer source mute on 1 1 \n")
-        if a == 2:
+        else if a == 2:
             s.send("image load 0 /home/videoserver/videoServer/images/technicalDifficulties.png \n")
             s.send("audio mixer source mute on 1 1 \n")
-        if a == 3:
+        else if a == 3:
             s.send("image load 0 /home/videoserver/videoServer/images/endScreen.png \n")
             s.send("audio mixer source mute on 1 1 \n")
         s.close()

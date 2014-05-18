@@ -111,31 +111,31 @@ stack  0 1 2 5 3 4
 
 text font 0 Sans Bold 12
 
-text string 0 Pilot
-text string 1 Tactical
-text string 2 Engineer
-text string 3 Cabin
-text string 4 Captain
+text string 1 Pilot
+text string 2 Tactical
+text string 3 Engineer
+text string 4 Cabin
+text string 5 Captain
 
-text place 0 0 0 256 430 1.0 1.0 1.0 1.0 nw
-text place align 0 center bottom
-text place backgr 0 20 20 2 2 0 0 0 1.0
-
-text place 1 1 0 768 430 1.0 1.0 1.0 1.0 nw
+text place 1 1 0 256 430 1.0 1.0 1.0 1.0 nw
 text place align 1 center bottom
 text place backgr 1 20 20 2 2 0 0 0 1.0
 
-text place 2 2 0 256 718 1.0 1.0 1.0 1.0 nw
+text place 2 2 0 768 430 1.0 1.0 1.0 1.0 nw
 text place align 2 center bottom
 text place backgr 2 20 20 2 2 0 0 0 1.0
 
-text place 3 3 0 512 550 1.0 1.0 1.0 1.0 nw
+text place 3 3 0 256 718 1.0 1.0 1.0 1.0 nw
 text place align 3 center bottom
 text place backgr 3 20 20 2 2 0 0 0 1.0
 
-text place 4 4 0 768 718 1.0 1.0 1.0 1.0 nw
+text place 4 4 0 512 550 1.0 1.0 1.0 1.0 nw
 text place align 4 center bottom
 text place backgr 4 20 20 2 2 0 0 0 1.0
+
+text place 5 5 0 768 718 1.0 1.0 1.0 1.0 nw
+text place align 5 center bottom
+text place backgr 5 20 20 2 2 0 0 0 1.0
 
 command create Show
   overlay text 0..end
