@@ -136,18 +136,22 @@ image place 1 1 0 0
 
 text font 0 Hanzel Extended 18
 
-text string 0
-text string 1
+text string 0 Startup
+text string 1 Startup
 
-text place 0 0 0 720 670 1.0 1.0 1.0 1.0 nw
+text place 0 0 0 605 690 1.0 1.0 1.0 1.0 nw
 text place align 0 left middle
 
-text place 1 1 0 500 670 1.0 1.0 1.0 1.0 nw
+text place 1 1 0 670 690 1.0 1.0 1.0 1.0 nw
 text place align 1 right middle
+
+text string 0
+text string 1
 
 command create Show
   overlay image 1
   overlay text 0
+  overlay text 1
   overlay image 0
   loop
 command end

@@ -8,13 +8,24 @@ NAME=CamFeeds
 
 case "$1" in 
   start)
-        log_daemon_msg "Starting $NAME" "$NAME"
+        log_daemon_msg "Starting $NAME this will take 30 seconds"
         # need to name the session
-        screen -S feedPilot  -d -m su -c /home/videoserver/videoServer/input2feed-PilotCam
-        screen -S feedTactical  -d -m su -c /home/videoserver/videoServer/input2feed-TacticalCam
-        screen -S feedEngineer  -d -m su -c /home/videoserver/videoServer/input2feed-EngineerCam
-        screen -S feedCabin  -d -m su -c /home/videoserver/videoServer/input2feed-CabinCam
-        screen -S feedCaptain  -d -m su -c /home/videoserver/videoServer/input2feed-CaptainCam
+        screen -S feedPilot  -d -m /home/videoserver/videoServer/feedScripts/input2feed-PilotCam
+        sleep 5
+        screen -S feedTactical  -d -m /home/videoserver/videoServer/feedScripts/input2feed-TacticalCam
+        sleep 5
+        screen -S feedEngineer  -d -m /home/videoserver/videoServer/feedScripts/input2feed-EngineerCam
+        sleep 5
+        screen -S feedCabin  -d -m /home/videoserver/videoServer/feedScripts/input2feed-CabinCam
+        sleep 5
+        screen -S feedCaptain  -d -m /home/videoserver/videoServer/feedScripts/input2feed-CaptainCam
+        sleep 5
+        screen -S snowmixPreview  -d -m /home/videoserver/Snowmix-0.4.3/src/snowmix '/home/videoserver/videoServer/snowmixIni/preview-basis'
+        screen -S snowmixLive  -d -m /home/videoserver/Snowmix-0.4.3/src/snowmix '/home/videoserver/videoServer/snowmixIni/live-basis'
+        sleep 5
+        screen -S screenPreview  -d -m /home/videoserver/videoServer/outputScripts/output2screenPreview
+        screen -S feedAudio  -d -m /home/videoserver/videoServer/feedScripts/audio2Live
+        screen -S oscServer  -d -m /usr/bin/python2.7 '/home/videoserver/videoServer/oscServer/oscServer.py'	
         log_end_msg 0
         ;;
   stop)
@@ -24,7 +35,11 @@ case "$1" in
         screen -S feedEngineer  -X quit
         screen -S feedCabin  -X quit
         screen -S feedCaptain  -X quit
-        screen -S irccat -X quit
+        screen -S snowmixPreview  -X quit
+        screen -S snowmixLive  -X quit
+        screen -S screenPreview  -X quit
+        screen -S oscServer  -X quit
+        screen -S feedAudio  -X quit
         log_end_msg 0
         ;;
   *)
