@@ -1,15 +1,4 @@
 #!/usr/bin/python
-""" receiving OSC with pyOSC
-https://trac.v2.nl/wiki/pyOSC
-example by www.ixi-audio.net based on pyOSC documentation
-
-this is a very basic example, for detailed info on pyOSC functionality check the OSC.py file 
-or run pydoc pyOSC.py. you can also get the docs by opening a python shell and doing
->>> import OSC
->>> help(OSC)
-"""
-
-
 import OSC
 import time, threading
 import socket
@@ -23,37 +12,46 @@ TCP_IP = '127.0.0.1'
 TCP_PORT = 9998
 TCP_PORT2 = 9999
 
+templatePath = "/home/solexious/Dropbox/shipshared/cert.svg"
 
-# tupple with ip, port. i dont use the () but maybe you want -> send_address = ('127.0.0.1', 9000)
+pilotName = ""
+tacticalName = ""
+engineerName = ""
+captainName = ""
+gmName = ""
+teamName = ""
+groundCrewName = ""
+locationName = ""
+startEpoch = 0
+
 receive_address = '10.0.0.50', 12000
-
-
-# OSC Server. there are three different types of server. 
 s = OSC.OSCServer(receive_address) # basic
-##s = OSC.ThreadingOSCServer(receive_address) # threading
-##s = OSC.ForkingOSCServer(receive_address) # forking
-
-
-
-# this registers a 'default' handler (for unmatched messages), 
-# an /'error' handler, an '/info' handler.
-# And, if the client supports it, a '/subscribe' & '/unsubscribe' handler
 s.addDefaultHandlers()
 
 # define a message-handler function for the server to call.
-def winTheGame(addr, tags, stuff, source):
+def death(addr, tags, stuff, source):
+    generateCerts()
+    
+    
+def win(addr, tags, stuff, source):
+    generateCerts()
+
+
+def getNames(addr, tags, stuff, source):
+    global pilotName
+    global tacticalName
+    global engineerName
+    global captainName
+    global gmName
+    global teamName
+    global groundCrewName
+    
     print "---"
     #   print "received new osc msg from %s" % OSC.getUrlStr(source)
     print "with addr : %s" % addr
     print "typetags %s" % tags
     print "data %s" % stuff
     print "---"
-    
-    with open("out.txt", "wt") as fout:
-      with open("Stud.txt", "rt") as fin:
-          for line in fin:
-              fout.write(line.replace('A', 'Orange'))
-    
     
     for a in stuff:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -72,6 +70,32 @@ def winTheGame(addr, tags, stuff, source):
             s.send("audio mixer source mute on 1 1 \n")
         s.close()
 
+
+def generateCerts():
+    global pilotName
+    global tacticalName
+    global engineerName
+    global captainName
+    global gmName
+    global teamName
+    global groundCrewName
+    
+    
+    # Pilot cert
+    with open("out.txt", "wt") as fout:
+      with open(templatePath, "rt") as fin:
+          for line in fin:
+              fout.write(line.replace('%PLAYER_NAME%', pilotName))
+              fout.write(line.replace('%TEAM_NAME%', teamName))
+              fout.write(line.replace('%PLAYER_ROLE%', 'Pilot'))
+              fout.write(line.replace('%DATE%', 'Orange'))
+              fout.write(line.replace('%LOCATION%', locationName))
+              fout.write(line.replace('%LENGTH%', 'Orange'))
+              fout.write(line.replace('%STORY_LINE%', 'Orange'))
+              fout.write(line.replace('%END_RESULT%', 'Orange'))
+              fout.write(line.replace('%CAPTAIN_NAME%', 'Orange'))
+              fout.write(line.replace('%GROUND_CREW_NAMES%', 'Orange'))
+    
 s.addMsgHandler("/screen/focus", screenFocus_handler) # adding our function
 
 
