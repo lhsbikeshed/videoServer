@@ -25,7 +25,12 @@ case "$1" in
         sleep 5
         screen -S screenPreview  -d -m /home/videoserver/videoServer/outputScripts/output2screenPreview
         screen -S feedAudio  -d -m /home/videoserver/videoServer/feedScripts/audio2Live
-        screen -S oscServer  -d -m /usr/bin/python2.7 '/home/videoserver/videoServer/oscServer/oscServer.py'	
+        screen -S oscServer  -d -m /usr/bin/python2.7 '/home/videoserver/videoServer/oscServer/oscServer.py'
+        #screen -S splitLive  -d -m /home/videoserver/videoServer/outputScripts/liveVideoSplitter
+        #sleep 2	
+        #screen -S liveLocal  -d -m /home/videoserver/videoServer/outputScripts/output2screenLive
+        #sleep 2	
+        #screen -S liveStream  -d -m /home/videoserver/videoServer/outputScripts/streamLive.sh 'ustream'
         log_end_msg 0
         ;;
   stop)
@@ -40,6 +45,9 @@ case "$1" in
         screen -S screenPreview  -X quit
         screen -S oscServer  -X quit
         screen -S feedAudio  -X quit
+        #screen -S splitLive  -X quit
+        #screen -S liveLocal  -X quit
+        #screen -S liveStream  -X quit
         log_end_msg 0
         ;;
   *)

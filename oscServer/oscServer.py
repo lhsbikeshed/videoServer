@@ -103,19 +103,30 @@ def screenFocus_handler(addr, tags, stuff, source):
     for a in stuff:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((TCP_IP, TCP_PORT))
+        s2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s2.connect((TCP_IP, TCP_PORT2))
         if a == 0:
             s.send("image load 0 \n")
             s.send("audio mixer source mute off 1 1 \n")
+            s2.send("text string 7 UNMUTED \n")
+            s2.send("text string 9 NONE \n")
         elif a == 1:
             s.send("image load 0 /home/videoserver/videoServer/images/beginScreen.png \n")
             s.send("audio mixer source mute on 1 1 \n")
+            s2.send("text string 7 MUTED \n")
+            s2.send("text string 9 BEGIN \n")
         elif a == 2:
             s.send("image load 0 /home/videoserver/videoServer/images/technicalDifficulties.png \n")
             s.send("audio mixer source mute on 1 1 \n")
+            s2.send("text string 7 MUTED \n")
+            s2.send("text string 9 TECH DIFF \n")
         elif a == 3:
             s.send("image load 0 /home/videoserver/videoServer/images/endScreen.png \n")
             s.send("audio mixer source mute on 1 1 \n")
+            s2.send("text string 7 MUTED \n")
+            s2.send("text string 9 END \n")
         s.close()
+        s2.close()
 
 
 
@@ -144,24 +155,5 @@ except KeyboardInterrupt :
     s.close()
     print "Waiting for Server-thread to finish"
     st.join() ##!!!
-    os.killpg(outputPreview.pid, signal.SIGTERM)
-    os.killpg(outputLive.pid, signal.SIGTERM)
-    #s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    #s.connect((TCP_IP, TCP_PORT))
-    #s.send("quit\n")
-    #s.close()
-    s2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s2.connect((TCP_IP, 9999))
-    s2.send("quit\n")
-    s2.close()
-    time.sleep(2)
-    os.killpg(snowmixPreview.pid, signal.SIGTERM)
-    os.killpg(snowmixLive.pid, signal.SIGTERM)
-    os.killpg(audioFeed.pid, signal.SIGTERM)
-    os.killpg(pilotFeed.pid, signal.SIGTERM)
-    os.killpg(tacticalFeed.pid, signal.SIGTERM)
-    os.killpg(engineerFeed.pid, signal.SIGTERM)
-    os.killpg(cabinFeed.pid, signal.SIGTERM)
-    os.killpg(captainFeed.pid, signal.SIGTERM)
     print "Done"
         
