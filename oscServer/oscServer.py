@@ -81,7 +81,7 @@ def setCamera(feedNum):
         s.send("stack 0 %s \n" % feedNum)
         s.send("image load 1 /home/videoserver/videoServer/images/screenOverlayMirror.png \n")
         s.send("text string 0 \n")
-        s.send("text string 1 Cabin: \n")
+        s.send("text string 1 Team: \n")
     elif feedNum == 5:
         s2.send("text place rgb 1 1.0 0.0 0.0 \n text place rgb 2 1.0 0.0 0.0 \n text place rgb 3 1.0 0.0 0.0 \n text place rgb 4 1.0 0.0 0.0 \n text place rgb 5 0.0 1.0 0.0 \n")
         s.send("stack 0 %s \n" % feedNum)
