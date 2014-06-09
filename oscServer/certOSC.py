@@ -9,10 +9,6 @@ import signal
 import time
 import datetime
 
-TCP_IP = '127.0.0.1'
-TCP_PORT = 9998
-TCP_PORT2 = 9999
-
 templatePath = "/home/solexious/Dropbox/shipshared/cert.svg"
 svgPath = "/home/solexious/Dropbox/shipshared/certs/"
 
@@ -26,17 +22,33 @@ groundCrewName = ""
 locationName = ""
 startEpoch = 0
 
-receive_address = '10.0.0.50', 12000
+receive_address = '127.0.0.1', 12010
 s = OSC.OSCServer(receive_address) # basic
 s.addDefaultHandlers()
 
 # define a message-handler function for the server to call.
 def death_handler(addr, tags, stuff, source):
+
+    print "---"
+    #   print "received new osc msg from %s" % OSC.getUrlStr(source)
+    print "with addr : %s" % addr
+    print "typetags %s" % tags
+    print "data %s" % stuff
+    print "---"
+    
     for a in stuff:
         generateCerts(a)
     
     
 def win_handler(addr, tags, stuff, source):
+
+    print "---"
+    #   print "received new osc msg from %s" % OSC.getUrlStr(source)
+    print "with addr : %s" % addr
+    print "typetags %s" % tags
+    print "data %s" % stuff
+    print "---"
+    
     generateCerts("returned home triumphant!")
 
 
@@ -69,6 +81,13 @@ def getNames_handler(addr, tags, stuff, source):
 def reset_handler(addr, tags, stuff, source):
     global startEpoch
     
+    print "---"
+    #   print "received new osc msg from %s" % OSC.getUrlStr(source)
+    print "with addr : %s" % addr
+    print "typetags %s" % tags
+    print "data %s" % stuff
+    print "---"
+    
     startEpoch = int(time.time())
 
 
@@ -90,54 +109,57 @@ def generateCerts(endResult):
         
         # Pilot cert
         svgNamePilot = svgPath + pilotName + "-" + teamName + "-" + today.strftime('%d-%m-%y') + ".svg"
-        svgNamePilot.replace(" ", "")
+        svgNamePilot = svgNamePilot.replace(" ", "")
         with open(svgNamePilot, "wt") as fout:
           with open(templatePath, "rt") as fin:
               for line in fin:
-                  fout.write(line.replace('%PLAYER_NAME%', pilotName))
-                  fout.write(line.replace('%TEAM_NAME%', teamName))
-                  fout.write(line.replace('%PLAYER_ROLE%', 'Pilot'))
-                  fout.write(line.replace('%DATE%', today.strftime('%d/%m/%y')))
-                  fout.write(line.replace('%LOCATION%', locationName))
-                  fout.write(line.replace('%LENGTH%', missionLength))
-                  fout.write(line.replace('%STORY_LINE%', 'many hardships'))
-                  fout.write(line.replace('%END_RESULT%', endResult))
-                  fout.write(line.replace('%CAPTAIN_NAME%', captainName))
-                  fout.write(line.replace('%GROUND_CREW_NAMES%', groundCrewName))
+                  line = line.replace('%PLAYER_NAME%', pilotName)
+                  line = line.replace('%TEAM_NAME%', teamName)
+                  line = line.replace('%PLAYER_ROLE%', 'Pilot')
+                  line = line.replace('%DATE%', today.strftime('%d/%m/%y'))
+                  line = line.replace('%LOCATION%', locationName)
+                  line = line.replace('%LENGTH%', str(missionLength))
+                  line = line.replace('%STORY_LINE%', 'many hardships')
+                  line = line.replace('%END_RESULT%', endResult)
+                  line = line.replace('%CAPTAIN_NAME%', captainName)
+                  line = line.replace('%GROUND_CREW_NAMES%', groundCrewName)
+                  fout.write(line)
         
         # Tactical cert
         svgNameTactical = svgPath + tacticalName + "-" + teamName + "-" + today.strftime('%d-%m-%y') + ".svg"
-        svgNameTactical.replace(" ", "")
+        svgNameTactical = svgNameTactical.replace(" ", "")
         with open(svgNameTactical, "wt") as fout:
           with open(templatePath, "rt") as fin:
               for line in fin:
-                  fout.write(line.replace('%PLAYER_NAME%', pilotName))
-                  fout.write(line.replace('%TEAM_NAME%', teamName))
-                  fout.write(line.replace('%PLAYER_ROLE%', 'Tactical'))
-                  fout.write(line.replace('%DATE%', today.strftime('%d/%m/%y')))
-                  fout.write(line.replace('%LOCATION%', locationName))
-                  fout.write(line.replace('%LENGTH%', missionLength))
-                  fout.write(line.replace('%STORY_LINE%', 'many hardships'))
-                  fout.write(line.replace('%END_RESULT%', endResult))
-                  fout.write(line.replace('%CAPTAIN_NAME%', captainName))
-                  fout.write(line.replace('%GROUND_CREW_NAMES%', groundCrewName))
+                  line = line.replace('%PLAYER_NAME%', tacticalName)
+                  line = line.replace('%TEAM_NAME%', teamName)
+                  line = line.replace('%PLAYER_ROLE%', 'Tactical')
+                  line = line.replace('%DATE%', today.strftime('%d/%m/%y'))
+                  line = line.replace('%LOCATION%', locationName)
+                  line = line.replace('%LENGTH%', str(missionLength))
+                  line = line.replace('%STORY_LINE%', 'many hardships')
+                  line = line.replace('%END_RESULT%', endResult)
+                  line = line.replace('%CAPTAIN_NAME%', captainName)
+                  line = line.replace('%GROUND_CREW_NAMES%', groundCrewName)
+                  fout.write(line)
         
         # Engineer cert
         svgNameEngineer = svgPath + engineerName + "-" + teamName + "-" + today.strftime('%d-%m-%y') + ".svg"
-        svgNameEngineer.replace(" ", "")
+        svgNameEngineer = svgNameEngineer.replace(" ", "")
         with open(svgNameEngineer, "wt") as fout:
           with open(templatePath, "rt") as fin:
               for line in fin:
-                  fout.write(line.replace('%PLAYER_NAME%', pilotName))
-                  fout.write(line.replace('%TEAM_NAME%', teamName))
-                  fout.write(line.replace('%PLAYER_ROLE%', 'Engineer'))
-                  fout.write(line.replace('%DATE%', today.strftime('%d/%m/%y')))
-                  fout.write(line.replace('%LOCATION%', locationName))
-                  fout.write(line.replace('%LENGTH%', missionLength))
-                  fout.write(line.replace('%STORY_LINE%', 'many hardships'))
-                  fout.write(line.replace('%END_RESULT%', endResult))
-                  fout.write(line.replace('%CAPTAIN_NAME%', captainName))
-                  fout.write(line.replace('%GROUND_CREW_NAMES%', groundCrewName))
+                  line = line.replace('%PLAYER_NAME%', engineerName)
+                  line = line.replace('%TEAM_NAME%', teamName)
+                  line = line.replace('%PLAYER_ROLE%', 'Engineer')
+                  line = line.replace('%DATE%', today.strftime('%d/%m/%y'))
+                  line = line.replace('%LOCATION%', locationName)
+                  line = line.replace('%LENGTH%', str(missionLength))
+                  line = line.replace('%STORY_LINE%', 'many hardships')
+                  line = line.replace('%END_RESULT%', endResult)
+                  line = line.replace('%CAPTAIN_NAME%', captainName)
+                  line = line.replace('%GROUND_CREW_NAMES%', groundCrewName)
+                  fout.write(line)
                   
     pilotName = ""
     tacticalName = ""
@@ -150,6 +172,8 @@ def generateCerts(endResult):
     
 s.addMsgHandler("/scene/youaredead", death_handler) # adding our function
 s.addMsgHandler("/game/gameWin", win_handler) # adding our function
+s.addMsgHandler("/game/reset", reset_handler) # adding our function
+s.addMsgHandler("/game/setNames", getNames_handler) # adding our function
 
 
 # just checking which handlers we have added
