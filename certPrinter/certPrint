@@ -1,0 +1,13 @@
+#!/bin/bash
+shopt -s nullglob
+while true; do
+  for file in /home/videoserver/videoServer/certPrinter/certs/*.svg
+  do
+      file="${file%.*}"
+      inkscape --without-gui --export-pdf="$file.pdf" "$file.svg"
+      lpr "$file.pdf"
+      rm "$file.pdf"
+      mv "$file.svg" /home/videoserver/videoServer/certPrinter/certs/printed/
+  done
+  sleep 2
+done

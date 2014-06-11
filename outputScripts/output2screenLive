@@ -1,0 +1,54 @@
+#!/bin/bash
+# Deliver mixer1 output and audio output to screen and audio
+
+# IMPORTANT >>>>>You need to get port, ip and feed_id right<<<<<
+port=9998
+ip=127.0.0.1
+
+# Set video feed 
+#feed_id=$1
+#audio_feed_id=$1
+
+# Check for SM variable and the snowmix and gstreamer settings
+if [ X$SM = X -o ! -f $SM/scripts/gstreamer-settings -o ! -f $SM/scripts/snowmix-settings ] ; then
+  echo "You need to se the environment variable SM to the base of the Snowmix directory"
+  exit 1
+fi
+
+# Load the Snowmix and GStreamer settings
+. $SM/scripts/gstreamer-settings
+. $SM/scripts/snowmix-settings
+# This will set
+# a) feed_rate
+# b) feed_channels
+# c) feed_control_pipe
+# d) feed_width
+# e) feed_height
+# f) ctrsocket
+# g) system_width
+# h) system_height
+# i) ratefraction
+# j) snowmix
+# k) channels
+# l) rate
+
+if [ X$ctrsocket = X -o X$system_width = X -o X$system_height = X ] ; then
+  echo Failed to get control pipe or width or height from running snowmix
+  exit 1
+fi
+
+VIDEOFORMAT=$VIDEOBGRA', width=(int)'$system_width', height=(int)'$system_height', framerate=(fraction)'$ratefraction
+OUTPUTFORMAT=$VIDEOBGRA', width=(int)'$system_width', height=(int)'$system_height
+#OUTPUTFORMAT=$VIDEOBGRA', width=853, height=480'
+
+while true ; do
+  $gstlaunch -v shmsrc socket-path='/tmp/live-local' do-timestamp=true is-live=true ! \
+    queue leaky=2 max-size-buffers=2	!\
+    $VIDEOFORMAT            ! \
+    videoscale		    ! \
+    $OUTPUTFORMAT	    ! \
+    $VIDEOCONVERT	    ! \
+    ximagesink
+    #autovideosink
+  sleep 2
+done

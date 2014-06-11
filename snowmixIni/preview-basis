@@ -117,25 +117,52 @@ text string 3 Engineer
 text string 4 Cabin
 text string 5 Captain
 
+text string 6 Cabin Mic:
+text string 7 UNMUTED
+text string 8 Screen:
+text string 9 NONE
+
 text place 1 1 0 256 430 1.0 1.0 1.0 1.0 nw
 text place align 1 center bottom
-text place backgr 1 20 20 2 2 0 0 0 1.0
+text place backgr 1 5 5 2 2 0 0 0 1.0
 
 text place 2 2 0 768 430 1.0 1.0 1.0 1.0 nw
 text place align 2 center bottom
-text place backgr 2 20 20 2 2 0 0 0 1.0
+text place backgr 2 5 5 2 2 0 0 0 1.0
 
 text place 3 3 0 256 718 1.0 1.0 1.0 1.0 nw
 text place align 3 center bottom
-text place backgr 3 20 20 2 2 0 0 0 1.0
+text place backgr 3 5 5 2 2 0 0 0 1.0
 
 text place 4 4 0 512 550 1.0 1.0 1.0 1.0 nw
 text place align 4 center bottom
-text place backgr 4 20 20 2 2 0 0 0 1.0
+text place backgr 4 5 5 2 2 0 0 0 1.0
 
 text place 5 5 0 768 718 1.0 1.0 1.0 1.0 nw
 text place align 5 center bottom
-text place backgr 5 20 20 2 2 0 0 0 1.0
+text place backgr 5 5 5 2 2 0 0 0 1.0
+
+text place 6 6 0 512 590 1.0 1.0 1.0 1.0 nw
+text place align 6 center bottom
+text place backgr 6 5 5 2 2 0 0 0 1.0
+
+text place 7 7 0 512 610 1.0 1.0 1.0 1.0 nw
+text place align 7 center bottom
+text place backgr 7 5 5 2 2 0 0 0 1.0
+
+text place 8 8 0 512 650 1.0 1.0 1.0 1.0 nw
+text place align 8 center bottom
+text place backgr 8 5 5 2 2 0 0 0 1.0
+
+text place 9 9 0 512 670 1.0 1.0 1.0 1.0 nw
+text place align 9 center bottom
+text place backgr 9 5 5 2 2 0 0 0 1.0
+
+text place rgb 1 1.0 0.0 0.0
+text place rgb 2 1.0 0.0 0.0
+text place rgb 3 1.0 0.0 0.0
+text place rgb 4 0.0 1.0 0.0
+text place rgb 5 1.0 0.0 0.0
 
 command create Show
   overlay text 0..end

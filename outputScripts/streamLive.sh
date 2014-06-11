@@ -117,6 +117,25 @@
     MIXERFORMAT=$VIDEO', bpp=(int)32, depth=(int)32, endianness=(int)4321, format=('$vfid')BGRA, red_mask=(int)65280, green_mask=(int)16711680, blue_mask=(int)-16777216, width=(int)'$width', height=(int)'$height', framerate=(fraction)'$framerate', pixel-aspect-ratio=(fraction)1/1, interlaced=(boolean)false'
     VIDEOSRC='shmsrc socket-path='$ctrsocket' do-timestamp=true is-live=true'
     AUDIOSRC="fdsrc fd=0"
+
+    echo $gstlaunch -v $GST_DEBUG                         \
+            $AUDIOSRC                          !\
+            $AUDIOFORMAT                            !\
+            queue                                   !\
+            $audioencoder                           !\
+            $ENCAUDIOFORMAT                         !\
+            queue                                   !\
+            mux. $VIDEOSRC                               !\
+            $VIDEOFORMAT                            !\
+            queue                                   !\
+            $VIDEOCONVERT                           !\
+            $videoencoder                           !\
+            $ENCVIDEOFORMAT                         !\
+            queue                                   !\
+            flvmux streamable=true name=mux         !\
+            queue                                   !\
+            rtmpsink location="$location"
+
     (echo audio sink ctr isaudio 1 ; sleep 10000000 ) | \
         nc 127.0.0.1 9998 | \
     (head -1

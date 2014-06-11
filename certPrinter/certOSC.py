@@ -9,8 +9,8 @@ import signal
 import time
 import datetime
 
-templatePath = "/home/solexious/Dropbox/shipshared/cert.svg"
-svgPath = "/home/solexious/Dropbox/shipshared/certs/"
+templatePath = "/home/videoserver/videoServer/certPrinter/cert.svg"
+svgPath = "/home/videoserver/videoServer/certPrinter/certs/"
 
 pilotName = ""
 tacticalName = ""
@@ -22,7 +22,7 @@ groundCrewName = ""
 locationName = ""
 startEpoch = 0
 
-receive_address = '127.0.0.1', 12010
+receive_address = '127.0.0.1', 12011
 s = OSC.OSCServer(receive_address) # basic
 s.addDefaultHandlers()
 
@@ -37,6 +37,8 @@ def death_handler(addr, tags, stuff, source):
     print "---"
     
     for a in stuff:
+        a = a.lower()
+        a = a + "."
         generateCerts(a)
     
     

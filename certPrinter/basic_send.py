@@ -1,4 +1,4 @@
-
+#!/usr/bin/python
 """ sending OSC with pyOSC
 https://trac.v2.nl/wiki/pyOSC
 example by www.ixi-audio.net based on pyOSC documentation
@@ -30,7 +30,7 @@ msg.append("Fuzzy Love buckets")
 msg.append("Clare Greenhalgh, Someone Else")
 msg.append("Loading Bar")
 client.sendto(msg, ('127.0.0.1', 12010)) # note that the second arg is a tupple and not two arguments
-
+"""
 time.sleep(5)
 
 ## the most basic ##
@@ -46,3 +46,4 @@ client = OSC.OSCClient()
 msg = OSC.OSCMessage()
 msg.setAddress("/game/gameWin")
 client.sendto(msg, ('127.0.0.1', 12010)) # note that the second arg is a tupple and not two arguments
+"""	

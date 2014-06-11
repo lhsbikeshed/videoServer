@@ -1,0 +1,49 @@
+#!/bin/bash
+# Deliver mixer1 output and audio output to screen and audio
+
+# IMPORTANT >>>>>You need to get port, ip and feed_id right<<<<<
+port=9998
+ip=127.0.0.1
+
+# Set video feed 
+#feed_id=$1
+#audio_feed_id=$1
+
+# Check for SM variable and the snowmix and gstreamer settings
+if [ X$SM = X -o ! -f $SM/scripts/gstreamer-settings -o ! -f $SM/scripts/snowmix-settings ] ; then
+  echo "You need to se the environment variable SM to the base of the Snowmix directory"
+  exit 1
+fi
+
+# Load the Snowmix and GStreamer settings
+. $SM/scripts/gstreamer-settings
+. $SM/scripts/snowmix-settings
+
+SRC="shmsrc socket-path='$ctrsocket' do-timestamp=true is-live=true"
+SHMSIZE='shm-size=64067200'
+SHMOPTION="wait-for-connection=0"
+SCALE="ffmpegcolorspace"
+VIDEOFORMAT='video/x-raw-rgb, bpp=(int)32, depth=(int)32, endianness=(int)4321, red_mask=(int)65280, green_mask=(int)16711680, blue_mask=(int)-16777216, pixel-aspect-ratio=(fraction)1/1, interlaced=(boolean)false, width=(int)1280, height=(int)720, framerate=(fraction)25/1'
+CONTROL0=/tmp/live-local
+CONTROL1=/tmp/live-local
+CONTROL2=/tmp/live-stream
+SHMSINK0="shmsink socket-path=$CONTROL0 $SHMSIZE $SHMOPTION"
+SHMSINK1="queue ! shmsink socket-path=$CONTROL1 $SHMSIZE $SHMOPTION"
+SHMSINK2="queue ! shmsink socket-path=$CONTROL2 $SHMSIZE $SHMOPTION"
+
+
+
+while true ; do
+    # Remove the named pipe if it exist
+    echo STARTING FEED
+    rm -f $CONTROL0
+    rm -f $CONTROL1
+    rm -f $CONTROL2
+    
+    # /usr/bin/gst-launch-1.0 -q $SRC ! videorate ! $SCALE ! $VIDEOFORMAT ! tee name=t1 ! $SHMSINK1 t1. ! $SHMSINK2
+    #/usr/bin/gst-launch-0.10 -q $SRC ! videorate ! $SCALE ! $VIDEOFORMAT ! $SHMSINK0
+    /usr/bin/gst-launch-0.10 -q shmsrc socket-path=/tmp/live-mixer do-timestamp=true is-live=true ! 'video/x-raw-rgb, bpp=(int)32, depth=(int)32, endianness=(int)4321, red_mask=(int)65280, green_mask=(int)16711680, blue_mask=(int)-16777216, pixel-aspect-ratio=(fraction)1/1, interlaced=(boolean)false, framerate=25/1, width=1280, height=720' !  tee name=t1 ! $SHMSINK1 t1. ! $SHMSINK2
+    
+    sleep 2
+done
+exit
